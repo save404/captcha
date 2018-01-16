@@ -1,2 +1,2 @@
 # captcha
-code
+crack captcha～～～
