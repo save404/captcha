@@ -6,7 +6,6 @@ sudo: false
 python:
   - "2.7"
   - "3.6"
-  - "nightly" # currently points to 3.6-dev
 
 script:
   - python base/train.py
