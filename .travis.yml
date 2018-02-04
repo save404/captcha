@@ -4,14 +4,9 @@ language: python
 sudo: false
 
 python:
-  # - "2.6"
   - "2.7"
-  # - "3.2"
-  # - "3.3"
-  # - "3.4"
-  # - "3.5"
-  # - "3.5-dev" # 3.5 development branch
-  # - "nightly" # currently points to 3.6-dev
+  - "3.6"
+  - "nightly" # currently points to 3.6-dev
 
 script:
   - python base/train.py
