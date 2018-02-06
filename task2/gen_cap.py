@@ -30,6 +30,8 @@ def gen_captcha_text_and_image():
 
 if __name__ == '__main__':
 	text, image = gen_captcha_text_and_image()
+	print(text)
+	print(image.shape)
 
 	#原文本显示在左上角
 	f = plt.figure()
