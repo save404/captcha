@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from captcha.image import ImageCaptcha
 
-chars = string.digits  # + string.ascii_lowercase + string.ascii_uppercase
+chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
 #生成随机验证码文本
-def random_captcha_text(char_set=chars, captcha_size=4):
+def random_captcha_text(char_set=chars, captcha_size=5):
 	captcha_text = []
 	for i in range(captcha_size):
 		c = random.choice(char_set)
