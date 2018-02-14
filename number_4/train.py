@@ -172,33 +172,3 @@ def train_crack_captcha_cnn():
 
 if __name__ == '__main__':
 	train_crack_captcha_cnn()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

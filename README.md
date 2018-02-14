@@ -11,6 +11,7 @@ Python 2.7 ,3.6
 git clone git@github.com:Save404/captcha.git
 cd captcha/base
 pip install -r requirements.txt
+cd number #(或某一文件夹)
 python train.py #可能要训练一天。。。
 python recognize.py 
 ```
