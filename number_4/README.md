@@ -6,7 +6,7 @@ crack captcha～～～
 git clone git@github.com:Save404/captcha.git
 cd captcha
 pip install -r requirements
-cd number
+cd number_4
 python train.py #可能要训练一天。。。
 python recognize.py 
 ```
