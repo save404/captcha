@@ -1,0 +1,12 @@
+language: python
+
+# with enabled SUDO the build goes slower
+sudo: false
+
+python:
+  - "2.7"
+
+script:
+  - python number_4/train.py
+  - python number_4/recognize.py
+  
