@@ -9,8 +9,9 @@ Python 2.7 ,3.6
 ## 安装使用
 ```bash
 git clone git@github.com:Save404/captcha.git
-cd captcha/base
+cd captcha
 pip install -r requirements.txt
+cd number #(或某一文件夹)
 python train.py #可能要训练一天。。。
 python recognize.py 
 ```
