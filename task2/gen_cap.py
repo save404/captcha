@@ -5,7 +5,7 @@ import string
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-from captcha.image import ImageCaptcha
+from image import ImageCaptcha
 
 chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
