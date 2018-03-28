@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf 
 
 from gen_cap import gen_captcha_text_and_image
+from get_cap import get_captcha_text_and_image
 from train import MAX_CAPTCHA
 from train import CHAR_SET_LEN
 from train import X
@@ -34,6 +35,8 @@ def crack_captcha(captcha_image):
 
 if __name__ == '__main__':
 	text, image = gen_captcha_text_and_image()
+	#for i in range(40):
+	#text, image = get_captcha_text_and_image(2, 'train/0002.jpg')
 	image = convert_to_gray(image)
 	image = image.flatten() / 255
 	predict_text = crack_captcha(image)
