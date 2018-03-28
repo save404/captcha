@@ -17,13 +17,13 @@ def get_captcha_text_and_image(line, img_name):
 	captcha_image = Image.open(img_name)
 	#captcha_image.show()
 	#print(np.array(captcha_image).shape)
-	#captcha_image = reduce_size(captcha_image)
+	captcha_image = reduce_size(captcha_image)
 	#captcha_image.show()
 	#print(captcha_image)
-	return captcha_text, np.array(captcha_image)
+	return captcha_text, captcha_image
 
 if __name__ == '__main__':
-	text, image = get_captcha_text_and_image(0, 'train/0000.jpg')
+	text, image = get_captcha_text_and_image(2, 'train/0002.jpg')
 	print(text)
 	print(image.shape)
 
