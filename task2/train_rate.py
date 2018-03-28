@@ -135,8 +135,8 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 # 训练
 def train_crack_captcha_cnn():
 
-	globalstep = 100000  # 全局下降步数
-	initial_learning_rate = 0.1  # 初始学习率
+	globalstep = 30000  # 全局下降步数
+	initial_learning_rate = 0.01  # 初始学习率
 	decaystep = 1000  # 实现衰减的频率
 	decay_rate = 0.2  # 衰减率
 
