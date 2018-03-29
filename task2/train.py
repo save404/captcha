@@ -4,12 +4,15 @@ import numpy as np
 import tensorflow as tf 
 from gen_cap import gen_captcha_text_and_image
 from gen_cap import chars
+from get_cap import get_captcha_text_and_image
 
-text, image = gen_captcha_text_and_image()
+text, image = get_captcha_text_and_image(0, 'train/0000.jpg')
+
+#text, image = gen_captcha_text_and_image()
 print("Image channel: ", image.shape)
 
 IMAGE_HEIGHT = 60
-IMAGE_WIDTH = 160
+IMAGE_WIDTH = 200
 MAX_CAPTCHA = len(text)
 print("Length: ", MAX_CAPTCHA)
 
@@ -107,20 +110,20 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 	conv1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv1 = tf.nn.dropout(conv1, keep_prob)
 
-	w_c2 = tf.Variable(w_alpha * tf.random_normal([3, 3, 32, 64]))
-	b_c2 = tf.Variable(b_alpha * tf.random_normal([64]))
+	w_c2 = tf.Variable(w_alpha * tf.random_normal([3, 3, 32, 32]))
+	b_c2 = tf.Variable(b_alpha * tf.random_normal([32]))
 	conv2 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv1, w_c2, strides=[1, 1, 1, 1], padding='SAME'), b_c2))
 	conv2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv2 = tf.nn.dropout(conv2, keep_prob)
 
-	w_c3 = tf.Variable(w_alpha * tf.random_normal([3, 3, 64, 64]))
+	w_c3 = tf.Variable(w_alpha * tf.random_normal([3, 3, 32, 64]))
 	b_c3 = tf.Variable(b_alpha * tf.random_normal([64]))
 	conv3 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv2, w_c3, strides=[1, 1, 1, 1], padding='SAME'), b_c3))
 	conv3 = tf.nn.max_pool(conv3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv3 = tf.nn.dropout(conv3, keep_prob)
 
 	# 全连接层
-	w_d = tf.Variable(w_alpha * tf.random_normal([8 * 20 * 64, 1024]))
+	w_d = tf.Variable(w_alpha * tf.random_normal([8 * 25 * 64, 1024]))
 	b_d = tf.Variable(b_alpha * tf.random_normal([1024]))
 	dense = tf.reshape(conv3, [-1, w_d.get_shape().as_list()[0]])
 	dense = tf.nn.relu(tf.add(tf.matmul(dense, w_d), b_d))
