@@ -5,7 +5,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 def reduce_size(img):
-	im = img.resize((160, 60), Image.ANTIALIAS)
+	im = img#.resize((160, 60), Image.ANTIALIAS)
 	#im.show()
 	return np.array(im)
 
