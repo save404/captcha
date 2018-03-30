@@ -12,6 +12,7 @@ from train import keep_prob
 from train import convert_to_gray
 from train import vec_to_text
 from train import crack_captcha_cnn
+from clean import denoise
 
 def crack_captcha(captcha_image):
 	output = crack_captcha_cnn()
@@ -36,7 +37,7 @@ def crack_captcha(captcha_image):
 if __name__ == '__main__':
 	#text, image = gen_captcha_text_and_image()
 	#for i in range(40):
-	text, image = get_captcha_text_and_image(11, 'show.jpg')
+	text, image = get_captcha_text_and_image(30, 'clean.jpg')
 	#image.show()
 	#print(image)
 	image = convert_to_gray(image)

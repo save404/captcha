@@ -1,3 +1,3 @@
-python deal.py
-open show.jpg
+python clean.py
+open clean.jpg
 python recognize.py
