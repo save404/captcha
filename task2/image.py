@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'DroidSansMono.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial Bold.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
@@ -166,7 +166,7 @@ class ImageCaptcha(_Captcha):
 
             dx = 0#random.randint(0, 4)
             dy = 0#random.randint(0, 6)
-            im = Image.new('RGBA', (w + dx, h + dy))
+            im = Image.new('RGB', (w + dx, h + dy))
             Draw(im).text((dx, dy), c, font=font, fill=color)
 
             # rotate

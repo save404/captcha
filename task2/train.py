@@ -166,7 +166,7 @@ def train_crack_captcha_cnn():
 				acc = sess.run(accuracy, feed_dict={X: batch_x_test, Y: batch_y_test, keep_prob: 1.})
 				print(step, acc)
 				# 如果准确度够大了, 保存模型, 完成训练
-				if acc > 0.8:
+				if acc > 0.99:
 					saver.save(sess, "./models/crack_captcha.model", global_step=step)
 					print('Training completed and the model is saved!')
 					break

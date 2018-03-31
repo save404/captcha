@@ -14,6 +14,8 @@ from train import vec_to_text
 from train import crack_captcha_cnn
 from clean import denoise
 
+index = 31
+
 def crack_captcha(captcha_image):
 	output = crack_captcha_cnn()
 
@@ -36,14 +38,8 @@ def crack_captcha(captcha_image):
 
 if __name__ == '__main__':
 	#text, image = gen_captcha_text_and_image()
-	#for i in range(40):
-	text, image = get_captcha_text_and_image(30, 'clean.jpg')
-	#image.show()
-	#print(image)
+	text, image = get_captcha_text_and_image(index, 'clean2.jpg')
 	image = convert_to_gray(image)
-	#image = np.reshape(image, (60, 160))
-	#new = Image.fromarray(image)
-	#new.show()
 	
 	image = image.flatten() / 255
 

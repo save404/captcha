@@ -1,3 +1,3 @@
 python clean.py
-open clean.jpg
+open clean2.jpg
 python recognize.py
