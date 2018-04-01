@@ -5,18 +5,14 @@ import string
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-from captcha.image import ImageCaptcha
+from image import ImageCaptcha
 
-chars = string.digits  # + string.ascii_lowercase + string.ascii_uppercase
+chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
 #生成随机验证码文本
-def random_captcha_text(char_set=chars, captcha_size=4):
+def random_captcha_text(char_set=chars, captcha_size=5):
 	captcha_text = []
-	c = random.choice(char_set)
-	captcha_text.append(c)
-	for i in range(int(captcha_size / 2)):
-		c = random.choice(['+', '-', '*'])
-		captcha_text.append(c)
+	for i in range(captcha_size):
 		c = random.choice(char_set)
 		captcha_text.append(c)
 	return ''.join(captcha_text)
@@ -34,6 +30,8 @@ def gen_captcha_text_and_image():
 
 if __name__ == '__main__':
 	text, image = gen_captcha_text_and_image()
+	print(text)
+	print(image.shape)
 
 	#原文本显示在左上角
 	f = plt.figure()
@@ -42,4 +40,6 @@ if __name__ == '__main__':
 
 	plt.imshow(image)
 	plt.show()
+
+
 
