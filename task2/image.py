@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'DroidSansMono.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial Bold.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
@@ -166,7 +166,7 @@ class ImageCaptcha(_Captcha):
 
             dx = 0#random.randint(0, 4)
             dy = 0#random.randint(0, 6)
-            im = Image.new('RGBA', (w + dx, h + dy))
+            im = Image.new('RGB', (w + dx, h + dy))
             Draw(im).text((dx, dy), c, font=font, fill=color)
 
             # rotate
@@ -213,8 +213,8 @@ class ImageCaptcha(_Captcha):
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset-4, int((self._height - h) / 4)), mask)
-            offset = offset + w + 12 + random.randint(-rand, 0)
+            image.paste(im, (offset, int((self._height - h) / 4)), mask)
+            offset = offset + w + 20 + random.randint(-rand, 0)
 
         if width > self._width:
             image = image.resize((self._width, self._height))
@@ -226,7 +226,7 @@ class ImageCaptcha(_Captcha):
 
         :param chars: text to be generated.
         """
-        background = random_color(238, 255)
+        background = (255,255,255)#random_color(238, 255)
         color = random_color(0, 200, random.randint(220, 255))
         im = self.create_captcha_image(chars, color, background)
         #self.create_noise_dots(im, color)

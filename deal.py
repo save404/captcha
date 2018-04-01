@@ -1,4 +1,4 @@
-# coding:utf-8
+#-*- coding: utf-8 -*-
 from PIL import Image,ImageDraw
 #import pytesseract
 import os
@@ -7,7 +7,7 @@ from PIL import ImageEnhance
 #tessdata_dir = '--tessdata-dir "C:\\Tesseract-OCR\\tessdata"'
 
 #去除干扰线
-im = Image.open('train/0011.jpg') # PIL库加载图片
+im = Image.open('train/0018.jpg') # PIL库加载图片
 #图像二值化
 enhancer = ImageEnhance.Contrast(im)
 im = enhancer.enhance(3)
@@ -46,6 +46,8 @@ for x in range(1,w-1):
             data.putpixel((x,list[i]),255)
             i=i+1
 
+im.save('show.jpg')
+'''
 for y in range(1,h-1):
     list = []
     x=1
@@ -81,7 +83,7 @@ im.save('show.jpg')
 # print('code:'+code )
 #print(code)
 
-
+'''
 
 
 
