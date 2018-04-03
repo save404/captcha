@@ -110,7 +110,7 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (63,65,67,69)
+        self._font_sizes = font_sizes or (63,66,69,72)
         self._truefonts = []
 
     @property
@@ -164,8 +164,8 @@ class ImageCaptcha(_Captcha):
             font = random.choice(self.truefonts)
             w, h = draw.textsize(c, font=font)
 
-            dx = random.randint(0, 4)
-            dy = random.randint(0, 6)
+            dx = 0#random.randint(0, 4)
+            dy = 0#random.randint(0, 6)
             im = Image.new('RGB', (w + dx, h + dy))
             Draw(im).text((dx, dy), c, font=font, fill=color)
 
@@ -174,7 +174,7 @@ class ImageCaptcha(_Captcha):
             im = im.rotate(random.uniform(-30, 30), Image.BILINEAR, expand=1)
 
             # warp
-            
+            '''
             dx = w * random.uniform(0.1, 0.3)
             dy = h * random.uniform(0.2, 0.3)
             x1 = int(random.uniform(-dx, dx))
@@ -191,6 +191,7 @@ class ImageCaptcha(_Captcha):
             )
             im = im.resize((w2, h2))
             im = im.transform((w, h), Image.QUAD, data)
+            '''
             
             return im
 
@@ -206,15 +207,15 @@ class ImageCaptcha(_Captcha):
 
         average = int(text_width / len(chars))
         rand = int(0.25 * average)
-        #print(rand)
-        offset = int(average)
-        #print(offset)
+        print(rand)
+        offset = int(0.25 * average)
+        print(offset)
 
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset-20, int((self._height - h) / 4)), mask)
-            offset = offset + w + 10 + random.randint(-rand, 0)
+            image.paste(im, (offset, int((self._height - h) / 4)), mask)
+            offset = offset + w + 5 + random.randint(-rand, 0)
 
         if width > self._width:
             image = image.resize((self._width, self._height))
