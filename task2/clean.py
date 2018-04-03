@@ -95,7 +95,7 @@ def NaiveRemoveNoise(im, pnum = 5):
                     im.putpixel((i, j), black);
 
 if __name__ == '__main__':
-    img = 'train/0035.jpg'
+    img = 'train/0004.jpg'
     new = denoise(img)
     new.save('clean1.jpg')
     NaiveRemoveNoise(new)

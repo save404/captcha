@@ -61,7 +61,7 @@ class _Captcha(object):
 
 class WheezyCaptcha(_Captcha):
     """Create an image CAPTCHA with wheezy.captcha."""
-    def __init__(self, width=200, height=75, fonts=None):
+    def __init__(self, width=200, height=60, fonts=None):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
@@ -110,7 +110,7 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (32, 38, 42)#(42, 50, 56)
+        self._font_sizes = font_sizes or (34, 38, 42)#(42, 50, 56)
         self._truefonts = []
 
     @property
@@ -213,7 +213,7 @@ class ImageCaptcha(_Captcha):
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset-5, int((self._height - h) / 4)), mask)
+            image.paste(im, (offset-7, int((self._height - h) / 4)), mask)
             offset = offset + w + 17 + random.randint(-rand, 0)
 
         if width > self._width:
@@ -227,7 +227,7 @@ class ImageCaptcha(_Captcha):
         :param chars: text to be generated.
         """
         background = (255,255,255)#random_color(238, 255)
-        color = random_color(0, 200, random.randint(220, 255))
+        color = (255,0,255)#random_color(255, 0, random.randint(220, 255))
         im = self.create_captcha_image(chars, color, background)
         #self.create_noise_dots(im, color)
         #self.create_noise_curve(im, color)
