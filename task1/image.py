@@ -61,7 +61,7 @@ class _Captcha(object):
 
 class WheezyCaptcha(_Captcha):
     """Create an image CAPTCHA with wheezy.captcha."""
-    def __init__(self, width=200, height=75, fonts=None):
+    def __init__(self, width=350, height=80, fonts=None):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS

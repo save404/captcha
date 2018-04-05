@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from image import ImageCaptcha
 
-chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
+chars = string.digits + string.ascii_uppercase# + string.ascii_lowercase
 
 #生成随机验证码文本
 def random_captcha_text(char_set=chars, captcha_size=4):
