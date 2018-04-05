@@ -102,7 +102,7 @@ keep_prob = tf.placeholder(tf.float32)
 # 定义卷积神经网络cnn
 def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 	x = tf.reshape(X, shape=[-1, IMAGE_HEIGHT, IMAGE_WIDTH, 1])
-	print(x)
+	#print(x)
 
 	# 3个卷积层
 	w_c1 = tf.Variable(w_alpha * tf.random_normal([3, 3, 1, 32]))
@@ -110,21 +110,21 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 	conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(x, w_c1, strides=[1, 1, 1, 1], padding='SAME'), b_c1))
 	conv1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv1 = tf.nn.dropout(conv1, keep_prob)
-	print(conv1)
+	#print(conv1)
 
 	w_c2 = tf.Variable(w_alpha * tf.random_normal([3, 3, 32, 64]))
 	b_c2 = tf.Variable(b_alpha * tf.random_normal([64]))
 	conv2 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv1, w_c2, strides=[1, 1, 1, 1], padding='SAME'), b_c2))
 	conv2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv2 = tf.nn.dropout(conv2, keep_prob)
-	print(conv2)
+	#print(conv2)
 
 	w_c3 = tf.Variable(w_alpha * tf.random_normal([3, 3, 64, 64]))
 	b_c3 = tf.Variable(b_alpha * tf.random_normal([64]))
 	conv3 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv2, w_c3, strides=[1, 1, 1, 1], padding='SAME'), b_c3))
 	conv3 = tf.nn.max_pool(conv3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv3 = tf.nn.dropout(conv3, keep_prob)
-	print(conv3)
+	#print(conv3)
 
 	# 全连接层
 	w_d = tf.Variable(w_alpha * tf.random_normal([8 * 25 * 64, 1024]))
