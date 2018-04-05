@@ -16,10 +16,10 @@ if __name__ == '__main__':
 	text, image = get_captcha_text_and_image(2, 'clean2.jpg')
 	print(text)
 	print(image.shape)
-	'''
+	
 	f = plt.figure()
 	ax = f.add_subplot(111)
 	ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
-	'''
+	
 	plt.imshow(image)
 	plt.show()

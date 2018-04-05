@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial Bold.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'SAUNSC_0.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
@@ -61,7 +61,7 @@ class _Captcha(object):
 
 class WheezyCaptcha(_Captcha):
     """Create an image CAPTCHA with wheezy.captcha."""
-    def __init__(self, width=200, height=75, fonts=None):
+    def __init__(self, width=350, height=80, fonts=None):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
@@ -106,11 +106,11 @@ class ImageCaptcha(_Captcha):
     :param fonts: Fonts to be used to generate CAPTCHA images.
     :param font_sizes: Random choose a font size from this parameters.
     """
-    def __init__(self, width=200, height=60, fonts=None, font_sizes=None):
+    def __init__(self, width=350, height=80, fonts=None, font_sizes=None):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (20, 26, 32, 38)#(42, 50, 56)
+        self._font_sizes = font_sizes or (90, 92)
         self._truefonts = []
 
     @property
@@ -163,11 +163,15 @@ class ImageCaptcha(_Captcha):
         def _draw_character(c):
             font = random.choice(self.truefonts)
             w, h = draw.textsize(c, font=font)
-
+            #w = 32
+            #h = 64
             dx = 0#random.randint(0, 4)
             dy = 0#random.randint(0, 6)
-            im = Image.new('RGB', (w + dx, h + dy))
-            Draw(im).text((dx, dy), c, font=font, fill=color)
+            im = Image.new('RGBA', (w + dx, h + dy))
+            if c == '*':
+                Draw(im).text((dx, 16), c, font=font, fill=color)
+            else:
+                Draw(im).text((dx, -5), c, font=font, fill=color)
 
             # rotate
             #im = im.crop(im.getbbox())
@@ -199,7 +203,7 @@ class ImageCaptcha(_Captcha):
             images.append(_draw_character(c))
 
         text_width = sum([im.size[0] for im in images])
-
+        '''
         #width = self._width
         width = max(text_width, self._width)
         #image = image.resize((width, self._height))
@@ -209,12 +213,27 @@ class ImageCaptcha(_Captcha):
         #print(rand)
         offset = int(average)
         #print(offset)
-
+        '''
+        width = max(text_width, self._width)
+        lenth = len(chars)
+        if lenth == 5:
+            offset = 10.2
+            increment = 32.8
+        elif lenth == 6:
+            offset = 11
+            increment = 18
+        elif lenth == 7:
+            offset = 11.05
+            increment = 10.33
+        elif lenth == 8:
+            offset = 9.05
+            increment = 5.2
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset, int((self._height - h) / 4)), mask)
-            offset = offset + w + 20 + random.randint(-rand, 0)
+            #image.paste(im, (int(offset) + 2, int((self._height - h) / 8)), mask)
+            image.paste(im, (int(offset) + 2, -13), mask)
+            offset = offset + w + increment#12 + random.randint(-rand, 0)
 
         if width > self._width:
             image = image.resize((self._width, self._height))
@@ -226,7 +245,7 @@ class ImageCaptcha(_Captcha):
 
         :param chars: text to be generated.
         """
-        background = (255,255,255)#random_color(238, 255)
+        background = random_color(238, 255)
         color = random_color(0, 200, random.randint(220, 255))
         im = self.create_captcha_image(chars, color, background)
         #self.create_noise_dots(im, color)
