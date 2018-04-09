@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'algerianef.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
@@ -110,7 +110,7 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (67,68,69,70)
+        self._font_sizes = font_sizes or (80,82)
         self._truefonts = []
 
     @property

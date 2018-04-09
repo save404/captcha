@@ -17,11 +17,14 @@ def get_captcha_text_and_image(line, img_name):
 	return captcha_text, captcha_image
 
 if __name__ == '__main__':
-	text, image = get_captcha_text_and_image(0, 'clean2.jpg')
+	n = 0
+	while True:
+		text, image = get_captcha_text_and_image(0, 'train/%04d.jpg'%n)#'clean2.jpg')
 
-	f = plt.figure()
-	ax = f.add_subplot(111)
-	ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
+		f = plt.figure()
+		ax = f.add_subplot(111)
+		ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
 
-	plt.imshow(image)
-	plt.show()
+		plt.imshow(image)
+		plt.show()
+		n += 1
