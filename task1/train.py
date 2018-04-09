@@ -3,17 +3,16 @@
 import numpy as np 
 import tensorflow as tf 
 from gen_cap import gen_captcha_text_and_image
-from gen_cap import number, symbol
+from gen_cap import chars
 
 text, image = gen_captcha_text_and_image()
 print("Image channel: ", image.shape)
 
 IMAGE_HEIGHT = 80
 IMAGE_WIDTH = 350
-MAX_CAPTCHA = len(text)
+MAX_CAPTCHA = 8
 print("Length: ", MAX_CAPTCHA)
 
-chars = number + symbol
 char_set = []
 for i in chars:
 	char_set.append(i)
@@ -29,37 +28,22 @@ def convert_to_gray(img):
 
 # 文本转向量
 def text_to_vec(text):
-	text_len = len(text)
-	#if text_len > MAX_CAPTCHA:
-	#	raise ValueError('Wrong length!')
-
 	vector = np.zeros(MAX_CAPTCHA * CHAR_SET_LEN)
-	def char_to_pos(c):
+
+	def char2pos(c):
 		if c == '+':
 			k = 10
-			return k
 		elif c == '-':
 			k = 11
-			return k
 		elif c == '*':
 			k = 12
-			return k
-		k = ord(c) - ord('0')
-		'''
-		if k > 9:
-			if
-			k = ord(c) - ord('A') + 10
-			if  k > 35:
-				k = ord(c) - ord('a') + 36
-				if k > 61:
-					raise ValueError('No map char!')
-		'''
+		else:
+			k = ord(c) - 48
 		return k
 
 	for i, c in enumerate(text):
-		idx = i * CHAR_SET_LEN + char_to_pos(c)
+		idx = i * CHAR_SET_LEN + char2pos(c)
 		vector[idx] = 1
-
 	return vector
 
 # 向量转文本
@@ -67,19 +51,19 @@ def vec_to_text(vec):
 	char_pos = vec.nonzero()[0]
 	text = []
 	for i, c in enumerate(char_pos):
+		char_at_pos = i
 		char_idx = c % CHAR_SET_LEN
 		if char_idx < 10:
-			char_code = char_idx + ord('0')
-		elif char_idx == 10:
-			char_code = ord('+')
-		elif char_idx == 11:
-			char_code = ord('-')
-		elif char_idx == 12:
-			char_code = ord('*')
+			char_code = char_idx + 48
 		else:
-			raise ValueError('Index Error!')
+			if char_idx == 10:
+				char_code = ord('+')
+			elif char_idx == 11:
+				char_code = ord('-')
+			elif char_idx == 12:
+				char_code = ord('*')
 		text.append(chr(char_code))
-	return ''.join(text)
+	return "".join(text)
 
 # 生成一批captcha作为样本
 def gen_next_batch(batch_size=128):
@@ -116,29 +100,25 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 	conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(x, w_c1, strides=[1, 1, 1, 1], padding='SAME'), b_c1))
 	conv1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv1 = tf.nn.dropout(conv1, keep_prob)
-	#print(conv1)
 
 	w_c2 = tf.Variable(w_alpha * tf.random_normal([3, 3, 32, 64]))
 	b_c2 = tf.Variable(b_alpha * tf.random_normal([64]))
 	conv2 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv1, w_c2, strides=[1, 1, 1, 1], padding='SAME'), b_c2))
 	conv2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv2 = tf.nn.dropout(conv2, keep_prob)
-	#print(conv2)
 
 	w_c3 = tf.Variable(w_alpha * tf.random_normal([3, 3, 64, 64]))
 	b_c3 = tf.Variable(b_alpha * tf.random_normal([64]))
 	conv3 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(conv2, w_c3, strides=[1, 1, 1, 1], padding='SAME'), b_c3))
 	conv3 = tf.nn.max_pool(conv3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	conv3 = tf.nn.dropout(conv3, keep_prob)
-	#print(conv3)
 
 	# 全连接层
-	w_d = tf.Variable(w_alpha * tf.random_normal([350 * 64, 1024]))
+	w_d = tf.Variable(w_alpha * tf.random_normal([10 * 44 * 64, 1024]))
 	b_d = tf.Variable(b_alpha * tf.random_normal([1024]))
 	dense = tf.reshape(conv3, [-1, w_d.get_shape().as_list()[0]])
 	dense = tf.nn.relu(tf.add(tf.matmul(dense, w_d), b_d))
 	dense = tf.nn.dropout(dense, keep_prob)
-	#print(dense)
 
 	w_out = tf.Variable(w_alpha * tf.random_normal([1024, MAX_CAPTCHA * CHAR_SET_LEN]))
 	b_out = tf.Variable(b_alpha * tf.random_normal([MAX_CAPTCHA * CHAR_SET_LEN]))
@@ -177,12 +157,13 @@ def train_crack_captcha_cnn():
 				acc = sess.run(accuracy, feed_dict={X: batch_x_test, Y: batch_y_test, keep_prob: 1.})
 				print(step, acc)
 				# 如果准确度够大了, 保存模型, 完成训练
-				if acc > 0.8:
+				if acc > 0.98 or step > 200000:
 					saver.save(sess, "./models/crack_captcha.model", global_step=step)
 					print('Training completed and the model is saved!')
 					break
 
 			step += 1
+
 
 if __name__ == '__main__':
 	train_crack_captcha_cnn()

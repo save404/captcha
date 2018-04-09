@@ -13,6 +13,8 @@ from train import convert_to_gray
 from train import vec_to_text
 from train import crack_captcha_cnn
 
+index = 9
+
 def crack_captcha(captcha_image):
 	output = crack_captcha_cnn()
 
@@ -34,8 +36,8 @@ def crack_captcha(captcha_image):
 		return vec_to_text(vector) 
 
 if __name__ == '__main__':
-	text, image = gen_captcha_text_and_image()
-	#text, image = get_captcha_text_and_image(0, 'train/0000.jpg')
+	#text, image = gen_captcha_text_and_image()
+	text, image = get_captcha_text_and_image(index, 'clean2.jpg')
 	image = convert_to_gray(image)
 	image = image.flatten() / 255
 	predict_text = crack_captcha(image)
