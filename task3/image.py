@@ -110,7 +110,7 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (67,68,69,70)
+        self._font_sizes = font_sizes or (80,82)
         self._truefonts = []
 
     @property

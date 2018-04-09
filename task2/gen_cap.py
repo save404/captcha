@@ -29,17 +29,18 @@ def gen_captcha_text_and_image():
 	return captcha_text, captcha_image
 
 if __name__ == '__main__':
-	text, image = gen_captcha_text_and_image()
-	print(text)
-	print(image.shape)
+	while True:
+		text, image = gen_captcha_text_and_image()
+		print(text)
+		print(image.shape)
 
-	#原文本显示在左上角
-	f = plt.figure()
-	ax = f.add_subplot(111)
-	ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
+		#原文本显示在左上角
+		f = plt.figure()
+		ax = f.add_subplot(111)
+		ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
 
-	plt.imshow(image)
-	plt.show()
+		plt.imshow(image)
+		plt.show()
 
 
 
