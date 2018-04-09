@@ -207,9 +207,9 @@ class ImageCaptcha(_Captcha):
 
         average = int(text_width / len(chars))
         rand = 12#int(0.25 * average)
-        print(rand)
+        #print(rand)
         offset = 12
-        print(offset)
+        #print(offset)
 
         for im in images:
             w, h = im.size
