@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'algerianef.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
