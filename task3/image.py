@@ -22,7 +22,7 @@ except ImportError:
     wheezy_captcha = None
 
 DATA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial Bold.ttf')]
+DEFAULT_FONTS = [os.path.join(DATA_DIR, 'Arial.ttf')]
 
 if wheezy_captcha:
     __all__ = ['ImageCaptcha', 'WheezyCaptcha']
@@ -206,16 +206,16 @@ class ImageCaptcha(_Captcha):
         image = image.resize((width, self._height))
 
         average = int(text_width / len(chars))
-        rand = int(0.25 * average)
-        #print(rand)
-        offset = int(0.25 * average)
-        #print(offset)
+        rand = 12#int(0.25 * average)
+        print(rand)
+        offset = 12
+        print(offset)
 
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset-1, int((self._height - h) / 4)), mask)
-            offset = offset + w + random.randint(-5, 0)
+            image.paste(im, (offset-2, int((self._height - h) / 4)), mask)
+            offset = offset + w + random.randint(-4, 0)
 
         if width > self._width:
             image = image.resize((self._width, self._height))

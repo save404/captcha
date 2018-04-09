@@ -9,7 +9,7 @@ from image import ImageCaptcha
 number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 number1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 symbol = ['+', '-', '*']
-
+chars = number + number1 + symbol
 # 生成随机验证码文本
 
 
@@ -54,9 +54,6 @@ if __name__ == '__main__':
 
 			plt.imshow(image)
 			plt.show()
-			break
-		else:
-			print("generate succeed but no 0")
 
 
 
