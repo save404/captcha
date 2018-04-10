@@ -13,7 +13,30 @@ from train import vec_to_text
 from train import crack_captcha_cnn
 from clean import denoise, NaiveRemoveNoise
 
+def deal(text, l=8):
+	new = []
+	cnt = 0
+	cut = 6
+	for i in range(l):
+		if text[i] == '+' or text[i] == '-' or text[i] == '*':
+			cnt += 1;
+			if cnt == 2:
+				cut = i+1
+				break
+
+	text = text[0:cut+1] if text[cut] == text[cut+1] else text[0:cut+2]
+	cnt = 0
+	for i in range(len(text)):
+		if text[i] == '+' or text[i] == '-' or text[i] == '*':
+			cnt += 1;
+			if cnt == 3 and text[i] == '-':
+				new.append('1')
+				continue
+		new.append(text[i])
+	return ''.join(new)
+
 if __name__ == '__main__':
+	cnt = 0
 	file = open('train/output.txt', 'w+')
 	output = crack_captcha_cnn()
 
@@ -37,14 +60,25 @@ if __name__ == '__main__':
 			text = text_list[0].tolist()
 			vector = np.zeros(MAX_CAPTCHA * CHAR_SET_LEN)
 
-			i = 0
+			j = 0
 			for n in text:
-				vector[i * CHAR_SET_LEN + n] = 1
-				i += 1
+				vector[j * CHAR_SET_LEN + n] = 1
+				j += 1
 
-			predict_text = vec_to_text(vector) 
-			print('Real: {}   Predict: {}'.format(real, predict_text))
-			file.write(idx + ',' + predict_text + '\n')
+			predict_text = vec_to_text(vector)
+			deal_text = deal(predict_text)
+
+			res = 0
+			try:
+				res = eval(deal(predict_text))
+			except:
+				res = 0
+
+			if real[:real.index('=')] == deal_text:
+				cnt += 1
+
+			print('{} Real: {}   Predict: {}={}           {}    {}'.format(i+1,real, deal_text, res, cnt, cnt / (i+1)))
+			file.write(idx + ',' + deal_text + '=' + str(res) + '\n')
 
 		file.close()
 
