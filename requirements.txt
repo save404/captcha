@@ -1,5 +1,5 @@
-numpy==1.13.3
-matplotlib==2.1.1
-tensorflow==1.4.1
-Pillow==4.3.0
-captcha==0.2.4
+numpy
+matplotlib
+tensorflow
+Pillow
+captcha
