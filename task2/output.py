@@ -22,7 +22,7 @@ if __name__ == '__main__':
 		saver.restore(sess, tf.train.latest_checkpoint('./models/'))
 
 		predict = tf.argmax(tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN]), 2)
-		for i in range(40):
+		for i in range(10000):
 			idx = str('%04d' % i)
 			img_name = 'train/' + idx + '.jpg'
 			new = denoise(img_name)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
 			predict_text = vec_to_text(vector) 
 			print('Real: {}   Predict: {}'.format(real, predict_text))
-			file.write(idx + ',' + predict_text + '\n')
+			file.write(idx + ',' + predict_text.upper() + '\n')
 
 		file.close()
 
