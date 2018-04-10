@@ -19,7 +19,7 @@ def get_captcha_text_and_image(line, img_name):
 if __name__ == '__main__':
 	n = 0
 	while True:
-		text, image = get_captcha_text_and_image(0, 'train/%04d.jpg'%n)#'clean2.jpg')
+		text, image = get_captcha_text_and_image(n, 'train/%04d.jpg'%n)#'clean2.jpg')
 
 		f = plt.figure()
 		ax = f.add_subplot(111)

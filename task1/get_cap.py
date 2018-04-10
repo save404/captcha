@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def get_captcha_text_and_image(line, img_name):
 	with open('train/mappings.txt', 'r') as mp:
-		captcha_text = mp.readlines()[line][5:10]
+		captcha_text = mp.readlines()[line][5:-1]
 
 	captcha_image = Image.open(img_name)
 	captcha_image = np.array(captcha_image)
