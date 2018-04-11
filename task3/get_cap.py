@@ -5,8 +5,11 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 def get_captcha_text_and_image(line, img_name):
-	with open('train/mappings.txt', 'r') as mp:
-		captcha_text = mp.readlines()[line][5:9]
+	try:
+		with open('train/mappings.txt', 'r') as mp:
+			captcha_text = mp.readlines()[line][5:9]
+	except:
+		captcha_text = ''
 	#print(captcha_text)
 
 	captcha_image = Image.open(img_name)
