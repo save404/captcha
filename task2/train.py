@@ -6,7 +6,7 @@ from gen_cap import gen_captcha_text_and_image
 from gen_cap import chars
 from get_cap import get_captcha_text_and_image
 
-text, image = get_captcha_text_and_image(0, 'train/0000.jpg')
+text, image = gen_captcha_text_and_image()
 
 #text, image = gen_captcha_text_and_image()
 print("Image channel: ", image.shape)

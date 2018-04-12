@@ -13,7 +13,7 @@ IMAGE_WIDTH = 200
 MAX_CAPTCHA = len(text)
 print("Length: ", MAX_CAPTCHA)
 
-char_set = ['_']
+char_set = []
 for i in chars:
 	char_set.append(i)
 CHAR_SET_LEN = len(char_set)

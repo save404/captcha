@@ -45,7 +45,7 @@ if __name__ == '__main__':
 		saver.restore(sess, tf.train.latest_checkpoint('./models/'))
 
 		predict = tf.argmax(tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN]), 2)
-		for i in range(10000):
+		for i in range(5000):
 			idx = str('%04d' % i)
 			img_name = 'train/' + idx + '.jpg'
 			new = denoise(img_name)
