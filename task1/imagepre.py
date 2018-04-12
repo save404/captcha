@@ -110,10 +110,8 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (88, 89)#(84, 86)
-        self._font_sizes2 = font_sizes or (98, 100)
+        self._font_sizes = font_sizes or (90, 92)
         self._truefonts = []
-        self._truefonts2 = []
 
     @property
     def truefonts(self):
@@ -125,17 +123,6 @@ class ImageCaptcha(_Captcha):
             for s in self._font_sizes
         ])
         return self._truefonts
-
-    @property
-    def truefonts2(self):
-        if self._truefonts2:
-            return self._truefonts2
-        self._truefonts2 = tuple([
-            truetype(n, s)
-            for n in self._fonts
-            for s in self._font_sizes2
-        ])
-        return self._truefonts2
 
     @staticmethod
     def create_noise_curve(image, color):
@@ -182,11 +169,7 @@ class ImageCaptcha(_Captcha):
             dy = 0#random.randint(0, 6)
             im = Image.new('RGBA', (w + dx, h + dy))
             if c == '*':
-                Draw(im).text((dx, 7), c, font=random.choice(self.truefonts2), fill=color)
-            elif c == '+':
-                Draw(im).text((dx, -14), c, font=random.choice(self.truefonts2), fill=color)
-            elif c == '-':
-                Draw(im).text((dx, -5), '——', font=font, fill=color)
+                Draw(im).text((dx, 16), c, font=font, fill=color)
             else:
                 Draw(im).text((dx, -5), c, font=font, fill=color)
 
