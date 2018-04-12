@@ -110,7 +110,7 @@ class ImageCaptcha(_Captcha):
         self._width = width
         self._height = height
         self._fonts = fonts or DEFAULT_FONTS
-        self._font_sizes = font_sizes or (34, 38, 42)#(42, 50, 56)
+        self._font_sizes = font_sizes or (37, 39)#(42, 50, 56)
         self._truefonts = []
 
     @property
@@ -205,16 +205,16 @@ class ImageCaptcha(_Captcha):
         #image = image.resize((width, self._height))
 
         average = int(text_width / len(chars))
-        rand = int(0.25 * average)
+        rand = 5#int(0.25 * average)
         #print(rand)
-        offset = int(average)
+        offset = 22#int(average) if int(average) < 23 else 23
         #print(offset)
 
         for im in images:
             w, h = im.size
             mask = im.convert('L').point(table)
-            image.paste(im, (offset-7, int((self._height - h) / 4)), mask)
-            offset = offset + w + 17 + random.randint(-rand, 0)
+            image.paste(im, (offset-10, int((self._height - h) / 3)), mask)
+            offset = offset + w + 12 + random.randint(-2, 3)
 
         if width > self._width:
             image = image.resize((self._width, self._height))
