@@ -14,7 +14,7 @@ from train import vec_to_text
 from train import crack_captcha_cnn
 from clean import denoise
 
-index = 35
+index = 0
 
 def crack_captcha(captcha_image):
 	output = crack_captcha_cnn()
