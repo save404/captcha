@@ -72,6 +72,7 @@ if __name__ == '__main__':
 
 			predict_text = vec_to_text(vector)
 			deal_text = deal(predict_text)
+
 			res = 0
 			try:
 				res = eval(deal_text)
@@ -84,6 +85,7 @@ if __name__ == '__main__':
 
 			print('Real: {}   Predict: {}       {}    {}'.format(real, txt, tr, tr/(i+1)))
 			file.write(idx + ',' + txt + '\n')
+
 
 		file.close()
 
