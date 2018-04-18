@@ -13,32 +13,37 @@ from train import vec_to_text
 from train import crack_captcha_cnn
 from clean import denoise, NaiveRemoveNoise
 
-def deal(text, l=8):
-	new = []
-	cnt = 0
-	cut = 6
-	for i in range(l):
-		if text[i] == '+' or text[i] == '-' or text[i] == '*':
-			cnt += 1;
-			if cnt == 2:
-				cut = i+1
-				break
+dir_name = 'test/'
 
-	text = text[0:cut+1] if text[cut] == text[cut+1] else text[0:cut+2]
+def deal(text):
 	cnt = 0
-	for i in range(len(text)):
-		if text[i] == '+' or text[i] == '-' or text[i] == '*':
-			cnt += 1;
-			if cnt == 3 and text[i] == '-':
-				new.append('1')
-				continue
-		new.append(text[i])
-	return ''.join(new)
+	i = 0
+	idx = 5
+	for c in text:
+		if c == '+' or c == '-' or c == '*':
+			cnt += 1
+
+		if cnt == 2:
+			idx = i
+			break
+		i += 1
+
+	d = 0
+	for j in range(idx+1, len(text)):
+		if text[j-1]!=text[j]:
+			d += 1
+
+	f = False
+	if text[idx+d] == '-' or text[idx+d] == '+' or text[idx+d] == '*':
+		f = True
+	return text[:idx+d] if f else text[:idx+d+1]
+
 
 if __name__ == '__main__':
-	cnt = 0
-	file = open('train/output.txt', 'w+')
+	file = open('result.txt', 'w+')
 	output = crack_captcha_cnn()
+
+	tr = 0
 
 	saver = tf.train.Saver()
 	with tf.Session() as sess:
@@ -47,7 +52,7 @@ if __name__ == '__main__':
 		predict = tf.argmax(tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN]), 2)
 		for i in range(5000):
 			idx = str('%04d' % i)
-			img_name = 'train/' + idx + '.jpg'
+			img_name = dir_name + idx + '.jpg'
 			new = denoise(img_name)
 			NaiveRemoveNoise(new)
 			new.save('clean.jpg')
@@ -70,15 +75,17 @@ if __name__ == '__main__':
 
 			res = 0
 			try:
-				res = eval(deal(predict_text))
-			except:
+				res = eval(deal_text)
+			except Exception as e:
 				res = 0
 
-			if real[:real.index('=')] == deal_text:
-				cnt += 1
+			txt = deal_text+'='+str(res)
+			if txt == real:
+				tr += 1
 
-			print('{} Real: {}   Predict: {}={}           {}    {}'.format(i+1,real, deal_text, res, cnt, cnt / (i+1)))
-			file.write(idx + ',' + deal_text + '=' + str(res) + '\n')
+			print('Real: {}   Predict: {}       {}    {}'.format(real, txt, tr, tr/(i+1)))
+			file.write(idx + ',' + txt + '\n')
+
 
 		file.close()
 

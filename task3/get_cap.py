@@ -6,7 +6,7 @@ from PIL import Image
 
 def get_captcha_text_and_image(line, img_name):
 	try:
-		with open('train/mappings.txt', 'r') as mp:
+		with open('test/mappings.txt', 'r') as mp:
 			captcha_text = mp.readlines()[line][5:9]
 	except:
 		captcha_text = ''
@@ -22,7 +22,7 @@ def get_captcha_text_and_image(line, img_name):
 if __name__ == '__main__':
 	n = 0
 	while True:
-		text, image = get_captcha_text_and_image(n, 'train/%04d.jpg'%n)#'clean2.jpg')
+		text, image = get_captcha_text_and_image(n, 'test/%04d.jpg'%n)#'clean2.jpg')
 
 		f = plt.figure()
 		ax = f.add_subplot(111)

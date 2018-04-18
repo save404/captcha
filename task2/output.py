@@ -13,8 +13,10 @@ from train import vec_to_text
 from train import crack_captcha_cnn
 from clean import denoise, NaiveRemoveNoise
 
+dir_name = 'test/'
+
 if __name__ == '__main__':
-	file = open('train/output.txt', 'w+')
+	file = open('result.txt', 'w+')
 	output = crack_captcha_cnn()
 
 	saver = tf.train.Saver()
@@ -24,7 +26,7 @@ if __name__ == '__main__':
 		predict = tf.argmax(tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN]), 2)
 		for i in range(5000):
 			idx = str('%04d' % i)
-			img_name = 'train/' + idx + '.jpg'
+			img_name = dir_name + idx + '.jpg'
 			new = denoise(img_name)
 			NaiveRemoveNoise(new)
 			new.save('clean.jpg')

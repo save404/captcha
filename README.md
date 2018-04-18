@@ -39,10 +39,10 @@ python train.py
 训练完成后模型保存在当前目录的```models```文件夹中
 
 ## 识别
-将待识别的验证码文件夹存放在对应的目录```(task1|task2|task3)```下，并重命名为```train```
+将待识别的验证码文件夹存放在对应的目录```(task1|task2|task3)```下，并重命名为```test```
 
 #### 单张测试  
-修改clean.py中img变量为验证码名(形如'train/0000.jpg')
+修改clean.py中img变量为验证码名(形如'test/0000.jpg')
 ```bash
 ./run.sh
 ```
@@ -51,7 +51,7 @@ python train.py
 ```bash
 python output.py
 ```
-输出结果保存在当前文件夹下```train/output.txt```中
+输出结果保存在当前文件夹下```result.txt```中
 
 ## 文件说明
 - ```data```: 验证码字体
